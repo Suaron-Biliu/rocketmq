@@ -8,22 +8,21 @@
        我们可以通过 CommandLine.getOptionValue('c') 获取对于到值
 
     eg 代码-引用与NamesrvStartup类：
-    `
-     if (commandLine.hasOption('c')) {
-                      String file = commandLine.getOptionValue('c');
-                      if (file != null) {
-                          InputStream in = new BufferedInputStream(new FileInputStream(file));
-                          properties = new Properties();
-                          properties.load(in);
-                          MixAll.properties2Object(properties, namesrvConfig);
-                          MixAll.properties2Object(properties, nettyServerConfig);
+   ```java
+ if (commandLine.hasOption('c')) {
+                  String file = commandLine.getOptionValue('c');
+                  if (file != null) {
+                      InputStream in = new BufferedInputStream(new FileInputStream(file));
+                      properties = new Properties();
+                      properties.load(in);
+                      MixAll.properties2Object(properties, namesrvConfig);
+                      MixAll.properties2Object(properties, nettyServerConfig);
 
-                          namesrvConfig.setConfigStorePath(file);
+                      namesrvConfig.setConfigStorePath(file);
 
-                          System.out.printf("load config properties file OK, %s%n", file);
-                          in.close();
-                      }
+                      System.out.printf("load config properties file OK, %s%n", file);
+                      in.close();
                   }
-
-    `
+              }
+```
 
