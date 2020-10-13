@@ -8,7 +8,7 @@
        我们可以通过 CommandLine.getOptionValue('c') 获取对于到值
 
 ```java
- - eg 代码-引用与NamesrvStartup类：
+ 示例代码-引用与NamesrvStartup类：
  if (commandLine.hasOption('c')) {
                   String file = commandLine.getOptionValue('c');
                   if (file != null) {
