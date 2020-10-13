@@ -6,6 +6,8 @@
         CommandLine 是用来解析命令行输入工具包
            我们利用 CommandLine 来解析命令获取我们想要到值， CommandLine.hasOption('c') 判断有没有-c 命令如果有就会返回true ,如果是有-c 命令，
        我们可以通过 CommandLine.getOptionValue('c') 获取对于到值
+
+    eg 代码-引用与NamesrvStartup类：
      ,
      if (commandLine.hasOption('c')) {
                   String file = commandLine.getOptionValue('c');
