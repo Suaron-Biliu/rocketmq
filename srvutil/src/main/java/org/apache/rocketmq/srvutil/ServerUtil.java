@@ -24,29 +24,52 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+/**
+ * 服务工具类
+ */
 public class ServerUtil {
-
+    /**
+     * 构建命令行选项
+     * @param options
+     * @return
+     */
     public static Options buildCommandlineOptions(final Options options) {
+        // 创建了一个 缩写为 -h 全拼为 -help 并且不需要输入值 ，描述为  Print help 的命令
         Option opt = new Option("h", "help", false, "Print help");
+        // 这个命令非必填
         opt.setRequired(false);
         options.addOption(opt);
+
+        // 创建了一个 缩写为 -n 全拼为 -namesrvAddr 并且需要输入值 ，描述为  Name server address list, eg: 192.168.0.1:9876;192.168.0.2:9876 的命令
 
         opt =
             new Option("n", "namesrvAddr", true,
                 "Name server address list, eg: 192.168.0.1:9876;192.168.0.2:9876");
+        //这个命令非必填
         opt.setRequired(false);
         options.addOption(opt);
 
         return options;
     }
 
+    /**
+     * 解析命令行
+     * @param appName 应用名称
+     * @param args  String[] args是main函数的形式参数bai,可以用来获取命令行用户du输入进去的参数
+     * @param options Options 就是我们定义的那些命令  NamesrvStartup.buildCommandlineOptions 产生的
+     * @param parser
+     * @return
+     */
     public static CommandLine parseCmdLine(final String appName, String[] args, Options options,
         CommandLineParser parser) {
+        // HelpFormatter 打印帮助信息相关的类有兴趣自行了解不太重要知道他是干什么的就行
         HelpFormatter hf = new HelpFormatter();
         hf.setWidth(110);
         CommandLine commandLine = null;
         try {
+            // Options 实例和一组字符串作为输入，并返回解析后生成的 CommandLine。
             commandLine = parser.parse(options, args);
+            // 查询 是否已经设置了 -h 选项 是的花就输出相关内容
             if (commandLine.hasOption('h')) {
                 hf.printHelp(appName, options, true);
                 System.exit(0);

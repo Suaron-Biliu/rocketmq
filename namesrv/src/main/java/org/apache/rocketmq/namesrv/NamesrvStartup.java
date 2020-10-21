@@ -75,18 +75,22 @@ public class NamesrvStartup {
      * @return
      * @throws IOException
      * @throws JoranException
+     * @备注 String[] args是main函数的形式参数bai,可以用来获取命令行用户du输入进去的参数
      */
     public static NamesrvController createNamesrvController(String[] args) throws IOException, JoranException {
         System.setProperty(RemotingCommand.REMOTING_VERSION_KEY, Integer.toString(MQVersion.CURRENT_VERSION));
         //PackageConflictDetect.detectFastjson();
-
+        // 构建 命令选项  new Options() 是构建一个 命令集合包
         Options options = ServerUtil.buildCommandlineOptions(new Options());
+        // 解析命令行  new PosixParser() 解析器
         commandLine = ServerUtil.parseCmdLine("mqnamesrv", args, buildCommandlineOptions(options), new PosixParser());
+        // 获取 命令信息为空的终止程序
         if (null == commandLine) {
+            // exit方法用于中断正在运行之中的java虚拟机 0 表示终止整个程序  非0 表示异常终止
             System.exit(-1);
             return null;
         }
-
+        // 创建一个 NamesrvConfig 配置类
         final NamesrvConfig namesrvConfig = new NamesrvConfig();
         final NettyServerConfig nettyServerConfig = new NettyServerConfig();
         nettyServerConfig.setListenPort(9876);
@@ -169,12 +173,20 @@ public class NamesrvStartup {
         controller.shutdown();
     }
 
+    /**
+     * 构建命令行
+     * @param options
+     * @return
+     */
     public static Options buildCommandlineOptions(final Options options) {
+        // 创建了一个 缩写为 -c 全拼为 -configFile 并且需要输入值 ，描述为  Name server config properties file(NameServer服务器配置属性文件路径) 的命令
         Option opt = new Option("c", "configFile", true, "Name server config properties file");
+        //非必填
         opt.setRequired(false);
         options.addOption(opt);
-
+        // 创建了一个 缩写为 -p 全拼为 -printConfigItem 并且不需要输入值 ，描述为  Print all config item(打印所有配置项) 的命令
         opt = new Option("p", "printConfigItem", false, "Print all config item");
+        //非必填
         opt.setRequired(false);
         options.addOption(opt);
 
